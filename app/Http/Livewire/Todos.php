@@ -7,11 +7,8 @@ use App\Models\Todo;
 
 class Todos extends Component
 {
-    public Todo $todo;
-
-    // public $todo_text;
-    // public $validation_message = "";
-
+    public $todo_text;
+    public $validation_message = "";
 
     protected $rules = [
         'todo.todo_text' => 'required'
@@ -23,31 +20,26 @@ class Todos extends Component
         return Todo::all();
     }
 
-    // public function addTodo()
-    // {
-    //     if ($this->todo_text === "") {
-    //         $this->validation_message = "Please type a todo";
-    //         return;
-    //     }
-    //     $this->validation_message = "";
-
-    //     Todo::create(["todo_text" => $this->todo_text, "is_done" => false]);
-    // }
-
-    public function save()
+    public function addTodo()
     {
-        // $this->validate();
-        // $this->todo->save();
+        if ($this->todo_text === "") {
+            $this->validation_message = "Please type a todo";
+            return;
+        }
+        $this->validation_message = "";
+
+        Todo::create(["todo_text" => $this->todo_text, "is_done" => false]);
     }
 
     public function setAsDone($id)
     {
-        error_log($id);
+        $todo = Todo::find($id);
+        $todo->is_done = !$todo->is_done;
+        $todo->save();
     }
 
     public function render()
     {
-        // return view('livewire.todos', ["todos" => $this->todos()]);
-        return view('livewire.todos');
+        return view('livewire.todos', ["todos" => $this->todos()]);
     }
 }
