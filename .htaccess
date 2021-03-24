@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine On 
+   
+   RewriteRule ^(.*)$ public/$1 [L]
+   
+   #
+   # redirect index.htm and index.html to / (do this before non-www to www)
+   #
+   Options +FollowSymLinks
+   RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html?\ HTTP/
+   RewriteRule ^(.*)index\.html?$ http://www.glasspips.com/$1 [R=301,L]
+</IfModule>

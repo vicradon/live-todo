@@ -3,7 +3,7 @@
         <div class="form-group">
             <p style="color:red">{{$validation_message}}</p>
             <label for="todo-text">Something to do</label>
-            <input class="form-control mx-4" id="todo-text" autofocus type="text" wire:model="todo_text" />
+            <input class="form-control mx-4" id="todo-text" autofocus type="text" wire:model="todo_text" required />
             <button class="btn btn-primary justify-self-right" type="submit">{{$edit_mode ? "Update": "Add"}}</button>
         </div>
     </form>
@@ -19,14 +19,13 @@
             </div>
         </div>
 
-
         @foreach($todos as $todo)
         <div class=" d-flex align-items-baseline my-2">
-            <input {{ $todo->is_done ? "checked":  "" }} value="$todo->is_done" wire:change="setAsDone({{$todo->id}})" type="checkbox" />
+            <input {{ $todo->is_done ? "checked":  "" }} wire:change="setAsDone({{$todo->id}})" type="checkbox" />
             <p class="mx-4 {{$todo->is_done ? "strikethrough":  ""}}">{{$todo->todo_text}}</p>
 
             <div class="d-flex justify-content-between align-items-center">
-                <button>
+                <button class="icon-button">
                     <img src="/icons/edit-icon.svg" alt="edit todo" class="mr-2" style="width:15px; cursor: pointer" wire:click="setEditMode({{$todo->id}})">
                 </button>
                 <button wire:click="removeTodo({{$todo->id}})" type="button" class="close text-danger" aria-label="Close">
